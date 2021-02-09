@@ -26,12 +26,13 @@ class control:
     def on_trigger(keys):
         comms.receive(keys)
         
-    while True:
-        events = pygame.event.get()
-        
+    def run(self):
         for KEY in KEYS:
-            keyboard.add_hotkey(KEY, on_trigger(KEY))
-        
-        for event in events:
-            if event.type == pygame.QUIT:
-                exit_program.Exit()
+            keyboard.add_hotkey(KEY, self.on_trigger(KEY))
+            
+        while True:
+            events = pygame.event.get()
+            
+            for event in events:
+                if event.type == pygame.QUIT:
+                    exit_program.Exit()

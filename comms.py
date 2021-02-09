@@ -17,19 +17,21 @@ PACKET = ""
 NUM_BYTES = 3
 ser = None
 cam = None
+ctp = None
 
 class Communications:
-    def __init__(usb, camera_id1, camera_id2, SCREEN_DIMENSIONS, FPS, CAM_ID):
+    def __init__(usb, camera_id1, camera_id2, SCREEN_DIMENSIONS, FPS):
         USB = usb
         cam = (camera.Camera(camera_id1), camera.Camera(camera_id2))
         ser = serial.Serial(str(USB), 230400)
-        gui.GUI(cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
+        ctp = convert_to_packet.Convert_To_Packet()
+        #gui.GUI(cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
     
     def kill_op(self):
         self.encode_and_send('9' + chr(254) + chr(255))
     
-    def receive(keys):
-        convert_to_packet.CONVERT_TO_PACKET(keys)
+    def receive(self, keys):
+        self.receive_packets(ctp.pack(keys))
         
     def encode_and_send(packets):
         for c in packets:
@@ -47,9 +49,17 @@ class Communications:
                 
         elif(packets[0] == '9'):
             self.kill_op()
+        else:
+            self.encode_and_send(packets)
                 
         return line
         
     def run(self):
         while True:
-            return 0
+            for i in range(int('1'), int('9')):
+                self.receive_packets('8' + chr(i) + chr(255))
+                
+            self.receive_packets('8' + chr(10) + chr(255))
+            self.receive_packets('8' + chr(11) + chr(255))
+            
+            # Take camera pic for GUI
