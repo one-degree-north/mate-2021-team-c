@@ -17,14 +17,16 @@ USB = ""
 SCREEN_DIMENSIONS = () # width, height
 FPS = 30
 CAM_ID = (1)
+comm = None
 
 def start():
     #create single instances of each class in the main class
-    controls = control.Control()
-    comms.Comms(USB, SCREEN_DIMENSIONS, FPS, CAM_ID)
+    
+    comm = comms.Comms(USB, SCREEN_DIMENSIONS, FPS, CAM_ID)
+    controls = control.Control(comm)
     
     control_thread = threading.Thread(target=controls.run())
-    comms_thread = threading.Thread(target=comms.run())
+    comms_thread = threading.Thread(target=comm.run())
     
     control_thread.start()
     comms_thread.start()

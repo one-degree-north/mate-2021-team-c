@@ -12,12 +12,16 @@ import convert_to_packet.py
 import gui.py
 import camera.py
 
+from Queue import Queue
+
 USB = ""
 PACKET = ""
 NUM_BYTES = 3
 ser = None
 cam = None
 ctp = None
+
+q = Queue()
 
 class Communications:
     def __init__(usb, camera_id1, camera_id2, SCREEN_DIMENSIONS, FPS):
@@ -31,7 +35,7 @@ class Communications:
         self.encode_and_send('9' + chr(254) + chr(255))
     
     def receive(self, keys):
-        self.receive_packets(ctp.pack(keys))
+        return self.receive_packets(ctp.pack(keys))
         
     def encode_and_send(packets):
         for c in packets:
@@ -61,5 +65,8 @@ class Communications:
                 
             self.receive_packets('8' + chr(10) + chr(255))
             self.receive_packets('8' + chr(11) + chr(255))
+            
+            while not q.empty():
+                self.receive(q.get())
             
             # Take camera pic for GUI

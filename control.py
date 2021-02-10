@@ -8,7 +8,6 @@ Created on Tue Jan 26 16:08:11 2021
 
 import pygame
 import keyboard
-import communications.py
 import exit_program.py
 
 pygame.init()
@@ -19,12 +18,12 @@ comms = None
 KEYS = []
 
 class control:
-    def __init__():
-        key_input = pygame.key.get_pressed()
-        comms = communications.Communications()
+    def __init__(comm):
+        #key_input = pygame.key.get_pressed()
+        comms = comm
         
     def on_trigger(keys):
-        comms.receive(keys)
+        comms.q.put(keys)
         
     def run(self):
         for KEY in KEYS:
