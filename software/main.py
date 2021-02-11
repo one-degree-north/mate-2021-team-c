@@ -7,10 +7,10 @@ Created on Thu Jan 21 15:34:28 2021
 """
 
 import sys
-import exit_program.py
-import control.py
-import comms.py
-import gui.py
+import exit_program
+import control
+import comms
+import gui
 import threading
 
 USB = ""

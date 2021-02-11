@@ -7,7 +7,7 @@ Created on Thu Jan 21 16:08:59 2021
 """
 
 import sys
-import comms.py
+import comms
 
 class exit_program:
     def Exit():

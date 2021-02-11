@@ -8,7 +8,7 @@ Created on Tue Jan 26 16:08:11 2021
 
 import pygame
 import keyboard
-import exit_program.py
+import exit_program
 
 pygame.init()
 
