@@ -12,7 +12,7 @@ import convert_to_packet
 # import gui
 import camera
 
-from Queue import Queue
+from queue import Queue
 
 USB = ""
 PACKET = ""
