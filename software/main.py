@@ -10,7 +10,7 @@ import sys
 import exit_program
 import control
 import comms
-import gui
+# import gui
 import threading
 
 USB = ""

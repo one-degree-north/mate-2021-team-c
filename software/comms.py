@@ -9,7 +9,7 @@ Created on Tue Feb  2 16:39:22 2021
 import serial
 import pygame
 import convert_to_packet
-import gui
+# import gui
 import camera
 
 from Queue import Queue
