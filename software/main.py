@@ -22,7 +22,7 @@ comm = None
 def start():
     #create single instances of each class in the main class
     
-    comm = comms.Comms(USB, SCREEN_DIMENSIONS, FPS, CAM_ID)
+    comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_ID)
     controls = control.Control(comm)
     
     control_thread = threading.Thread(target=controls.run())
