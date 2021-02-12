@@ -12,7 +12,7 @@ class Convert_To_Packet:
 
     def pack(keyPressed):
         if (keyPressed == 'w'):
-        ind = '0'  + chr(50)+ chr(255) # moveForward
+            ind = '0'  + chr(50)+ chr(255) # moveForward
         elif (keyPressed == 's'):
             ind = '1' + chr(50)+ chr(255) # moveBack
         elif (keyPressed == 'up'):
@@ -25,7 +25,7 @@ class Convert_To_Packet:
             ind = '5' + chr(50)+ chr(255) # turnRight
         elif (keyPressed == 'right'):
             ind = '6' + chr('left')+ chr(255) # turnLeft
-        elif (keyPressed = 'spacebar'):
+        elif (keyPressed == 'spacebar'):
             ind = '8' + '0' + chr(255) #Take screenshot 
 
             #if (secKey == '1'):
@@ -58,7 +58,7 @@ class Convert_To_Packet:
             elif (secKey = 'spacebar'):
                 ind = '8' + chr(0) + chr(255) # Take Screenshot
                 '''
-        elif (keyPressed = 'command+w'):
+        elif (keyPressed == 'command+w'):
             ind = '9' + chr(254) + chr(255) # StopTasks
 
         return ind
