@@ -16,17 +16,17 @@ video = None
 PATH = ""
 
 class Camera:
-    def __init__(camera_id):
-        CAMERA_ID = camera_id
+    def __init__(self, camera_id):
+        self.CAMERA_ID = camera_id
         
-    def capture():
+    def capture(self):
         video = cv2.VideoCapture(CAMERA_ID)
         ret, img = video.read()
         return pyimg.frombuffer(img.tostring(), img.shape[1::-1], "RGB")
     
-    def convert_to_img(name, imgformat):
+    def convert_to_img(self, name, imgformat):
         cv2.imwrite(os.path.join(PATH, name+imgformat), img)
         
-    def destroy():
+    def destroy(self):
         video.release()
         cv2.DestroyAllWindows()
