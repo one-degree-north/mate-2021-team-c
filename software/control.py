@@ -12,26 +12,25 @@ import exit_program
 
 pygame.init()
 
-key_input = None
-events = None
-comms = None
 KEYS = []
 
 class control:
-    def __init__(comm):
+    def __init__(self, comm):
         #key_input = pygame.key.get_pressed()
-        comms = comm
+        self.comms = comm
+        self.events = None
+        self.key_input = None
         
-    def on_trigger(keys):
-        comms.q.put(keys)
+    def on_trigger(self, keys):
+        self.comms.q.put(keys)
         
     def run(self):
         for KEY in KEYS:
             keyboard.add_hotkey(KEY, self.on_trigger(KEY))
             
         while True:
-            events = pygame.event.get()
+            self.events = pygame.event.get()
             
-            for event in events:
+            for event in self.events:
                 if event.type == pygame.QUIT:
                     exit_program.Exit()
