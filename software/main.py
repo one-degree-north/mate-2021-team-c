@@ -16,13 +16,13 @@ import threading
 USB = ""
 SCREEN_DIMENSIONS = () # width, height
 FPS = 30
-CAM_ID = (1)
+CAM_IDS = [1]
 comm = None
 
 def start():
     #create single instances of each class in the main class
     
-    comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_ID)
+    comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
     controls = control.Control(comm)
     
     control_thread = threading.Thread(target=controls.run())
@@ -30,7 +30,7 @@ def start():
     
     control_thread.start()
     comms_thread.start()
-    #gui.GUI(SCREEN_DIMENSIONS, FPS, CAM_ID)
+    #gui.GUI(SCREEN_DIMENSIONS, FPS, CAM_IDS)
 
 def end():
     exit_program.Exit()

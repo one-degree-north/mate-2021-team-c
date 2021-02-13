@@ -17,9 +17,11 @@ from queue import Queue
 NUM_BYTES = 3
 
 class Communications:
-    def __init__(self, usb, camera_id1, camera_id2, SCREEN_DIMENSIONS, FPS):
+    def __init__(self, usb, SCREEN_DIMENSIONS, FPS, cam_ids):
         self.USB = usb
-        self.cam = (camera.Camera(camera_id1), camera.Camera(camera_id2))
+        self.cams = []
+        for cam_id in cam_ids:
+            self.cams.append(camera.Camera(cam_id))
         self.ser = serial.Serial(str(self.USB), 230400)
         self.ctp = convert_to_packet.Convert_To_Packet()
         #gui.GUI(self.cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
@@ -40,8 +42,8 @@ class Communications:
         line = ""
         if(packets[0] == '8'):
             if(packets[1] == chr(12)):
-                self.cam[0].collect_screenshot() ###
-                self.cam[1].collect_screenshot()
+                for cam in self.cams:
+                    cam.collect_screenshot()
             else:
                 self.encode_and_send(packets) ###
                 line = self.ser.read(NUM_BYTES)
