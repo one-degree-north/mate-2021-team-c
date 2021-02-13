@@ -7,10 +7,10 @@ allKeys= ['w', 'a', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'comman
 
 class Convert_To_Packet:
     
-    def __init__():
+    def __init__(self):
         key = 'w'
 
-    def pack(keyPressed):
+    def pack(self, keyPressed):
         if (keyPressed == 'w'):
             ind = '0'  + chr(50)+ chr(255) # moveForward
         elif (keyPressed == 's'):
