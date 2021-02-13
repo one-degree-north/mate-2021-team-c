@@ -14,7 +14,7 @@ pygame.init()
 
 KEYS = []
 
-class control:
+class Control:
     def __init__(self, comm):
         #key_input = pygame.key.get_pressed()
         self.comms = comm
