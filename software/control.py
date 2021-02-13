@@ -10,7 +10,6 @@ import pygame
 import keyboard
 import exit_program
 
-pygame.init()
 
 KEYS = []
 
@@ -20,6 +19,7 @@ class Control:
         self.comms = comm
         self.events = None
         self.key_input = None
+        pygame.init()
         
     def on_trigger(self, keys):
         self.comms.q.put(keys)
