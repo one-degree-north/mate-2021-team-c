@@ -18,12 +18,13 @@ SCREEN_DIMENSIONS = () # width, height
 FPS = 30
 CAM_IDS = [1]
 comm = None
+exit_prog = None
 
 def start():
     #create single instances of each class in the main class
     
     comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
-    exit_program = exit_program.Exit_Program(comm)
+    exit_prog = exit_program.Exit_Program(comm)
     controls = control.Control(self.comm, self.exit_program)
     
     control_thread = threading.Thread(target=self.controls.run())
@@ -34,6 +35,6 @@ def start():
     #gui.GUI(SCREEN_DIMENSIONS, FPS, CAM_IDS)
 
 def end():
-    exit_program.Exit()
+    exit_prog.Exit()
     
 start()
