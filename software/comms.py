@@ -57,7 +57,7 @@ class Communications:
         
     def run(self):
         while True:
-            for i in range(int('1'), int('9')):
+            for i in range(int('0'), int('9')+1):
                 self.receive_packets('8' + chr(i) + chr(255))
                 
             self.receive_packets('8' + chr(10) + chr(255))
