@@ -23,10 +23,11 @@ def start():
     #create single instances of each class in the main class
     
     comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
-    controls = control.Control(comm)
+    exit_program = exit_program.Exit_Program(comm)
+    controls = control.Control(self.comm, self.exit_program)
     
-    control_thread = threading.Thread(target=controls.run())
-    comms_thread = threading.Thread(target=comm.run())
+    control_thread = threading.Thread(target=self.controls.run())
+    comms_thread = threading.Thread(target=self.comm.run())
     
     control_thread.start()
     comms_thread.start()
