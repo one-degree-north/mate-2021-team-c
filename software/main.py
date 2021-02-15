@@ -25,13 +25,13 @@ def start():
     
     comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
     exit_prog = exit_program.Exit_Program(comm)
-    controls = control.Control(self.comm, self.exit_program)
+    controls = control.Control(comm, exit_program)
     
-    control_thread = threading.Thread(target=self.controls.run())
-    comms_thread = threading.Thread(target=self.comm.run())
+    control_thread = threading.Thread(target=controls.run())
+    comms_thread = threading.Thread(target=comm.run())
     
-    control_thread.start()
     comms_thread.start()
+    control_thread.start()
     #gui.GUI(SCREEN_DIMENSIONS, FPS, CAM_IDS)
 
 def end():
