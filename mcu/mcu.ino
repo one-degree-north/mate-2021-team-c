@@ -1,5 +1,3 @@
-// Basic demo for accelerometer readings from Adafruit ICM20649
-
 #include <Adafruit_ICM20649.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
@@ -15,7 +13,7 @@
 
 #define SPEED_MAX 2000
 
-int motorPin = 10;
+#define motorPin 10
 
 Adafruit_ICM20649 icm;
 uint16_t measurement_delay_us = 65535; // Delay between measurements for testing
@@ -30,10 +28,7 @@ uint16_t measurement_delay_us = 65535; // Delay between measurements for testing
 Adafruit_ZeroTimer zt3 = Adafruit_ZeroTimer(3);
 //   Timer3: channel 0 on D2 or D10, channel 1 on D5 or D12
 
-void setup(void) {
-
- 
-  
+void setup() {
   Serial.begin(115200);
   while (!Serial)
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
@@ -109,13 +104,11 @@ void setup(void) {
   Serial.println();
 
   pinMode(motorPin, OUTPUT);
-  Serial.begin(9600);
-  while (! Serial);
-  Serial.println(255);
 
   configureD21PWM();
 } 
-void configureD21PWM(){
+
+void configureD21PWM() {
  zt3.configure(TC_CLOCK_PRESCALER_DIV1, // prescaler
                 TC_COUNTER_SIZE_16BIT,   // bit width of timer/counter
                 TC_WAVE_GENERATION_NORMAL_PWM // frequency or PWM mode
@@ -130,6 +123,7 @@ void configureD21PWM(){
   zt3.setPeriodMatch(SPEED_MAX, 0, 1);
   zt3.enable(true);
 }
+
 void loop() {
   // code for integrating motors into the accel-gyro code
   if (Serial.available())
@@ -177,6 +171,4 @@ void doSensorStuff(){
   Serial.println();
 
   delay(100);
-
-
 }
