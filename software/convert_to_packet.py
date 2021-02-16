@@ -1,7 +1,7 @@
-
 key = 'w' #imported from control subsystem
 secKey = 'q'#imported from control subsystem
 ind = ''
+allKeys= ['w', 'a', 'up', 'down', 'd', 'right', 'left', 'spacebar', 'ctrl+w']
 
 
 class Convert_To_Packet:
@@ -10,6 +10,7 @@ class Convert_To_Packet:
         self.key = 'w'
 
     def pack(self, keyPressed):
+        
         if (keyPressed == 'w'):
             self.ind = '0'  + chr(50)+ chr(255) # moveForward
         elif (keyPressed == 's'):
@@ -21,9 +22,11 @@ class Convert_To_Packet:
         elif (keyPressed == 'a'):
             self.ind = '4' +  chr(50)+ chr(255) # moveLeft
         elif (keyPressed == 'd'):
-            self.ind = '5' + chr(50)+ chr(255) # turnRight
+            self.ind = '5' + chr(50)+ chr(255) # moveRight
         elif (keyPressed == 'right'):
-            self.ind = '6' + chr('left')+ chr(255) # turnLeft
+            self.ind = '6' + chr(50)+ chr(255) # tiltRight
+        elif (keyPressed == 'left'):
+            self.ind = '7' + chr(50) + chr(255) # tiltLeft
         elif (keyPressed == 'spacebar'):
             self.ind = '8' + '0' + chr(255) #Take screenshot 
 
@@ -61,3 +64,5 @@ class Convert_To_Packet:
             self.ind = '9' + chr(254) + chr(255) # StopTasks
 
         return self.ind
+
+
