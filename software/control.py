@@ -9,7 +9,7 @@ Created on Tue Jan 26 16:08:11 2021
 import pygame
 import keyboard
 
-KEYS = []
+KEYS = ['w', 'a', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'ctrl+w']
 
 class Control:
     def __init__(self, comm, exit):
