@@ -2,7 +2,6 @@
 key = 'w' #imported from control subsystem
 secKey = 'q'#imported from control subsystem
 ind = ''
-allKeys= ['w', 'a', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'ctrl+w']
 
 
 class Convert_To_Packet:
