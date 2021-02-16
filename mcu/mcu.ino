@@ -38,12 +38,17 @@ void setup() {
 } 
 
 #define BUFFER_MAX 8
+#define PACKET_MAX 2
 
 void loop() {
   char buffer[BUFFER_MAX];
   int buf_ind = 0;
   while (Serial.available()) {
     write_to_buffer(buffer, &buf_ind);
+    char packet[2];
+    if (has_packet(buffer) && has_valid_packet(buffer)) {
+
+    }
   }
 }
 
@@ -54,6 +59,24 @@ void write_to_buffer(char* buffer, int* buf_ind) {
   }
   buffer[*buf_ind] = (char)buf_byte;
   (*buf_ind)++;
+}
+
+bool has_packet(char* buffer) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    if ((int)(buffer[ind]) == 255) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool has_valid_packet(char* buffer) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    if ((int)(buffer[ind]) == 255 && ind == PACKET_MAX + 1) {
+      return true;
+    }
+    return false;
+  }
 }
 
 void configureD21PWM() {
