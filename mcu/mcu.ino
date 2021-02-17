@@ -95,6 +95,36 @@ void flush_buffer(int* buffer, int* buf_ind) {
   (*buf_ind) = 0;
 }
 
+void execute_packet(int* packet) {
+  int cmd_byte = packet[0];
+  int arg_byte = packet[1];
+
+  switch (cmd_byte) {
+    case (int)('0'):
+      break;
+    case (int)('1'):
+      break;
+    case (int)('2'):
+      break;
+    case (int)('3'):
+      break;
+    case (int)('4'):
+      break;
+    case (int)('5'):
+      break;
+    case (int)('6'):
+      break;
+    case (int)('7'):
+      break;
+    case (int)('8'):
+      break;
+    case (int)('9'):
+      break;
+    default:
+      break;
+  }
+}
+
 void configureD21PWM() {
  zt3.configure(TC_CLOCK_PRESCALER_DIV1, // prescaler
                 TC_COUNTER_SIZE_16BIT,   // bit width of timer/counter
