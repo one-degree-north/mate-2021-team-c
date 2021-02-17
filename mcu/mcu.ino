@@ -41,11 +41,11 @@ void setup() {
 #define PACKET_MAX 2
 
 void loop() {
-  char buffer[BUFFER_MAX];
+  int buffer[BUFFER_MAX];
   int buf_ind = 0;
   while (Serial.available()) {
     write_to_buffer(buffer, &buf_ind);
-    char packet[2];
+    int packet[2];
     if (has_packet(buffer)) {
       if (has_valid_packet(buffer)) {
         buffer_to_packet(buffer, packet);
@@ -55,16 +55,16 @@ void loop() {
   }
 }
 
-void write_to_buffer(char* buffer, int* buf_ind) {
+void write_to_buffer(int* buffer, int* buf_ind) {
   int buf_byte = Serial.read();
   if (buf_byte == -1) {
     return;
   }
-  buffer[*buf_ind] = (char)buf_byte;
+  buffer[*buf_ind] = buf_byte;
   (*buf_ind)++;
 }
 
-bool has_packet(char* buffer) {
+bool has_packet(int* buffer) {
   for (int ind = 0; ind < BUFFER_MAX; ind++) {
     if ((int)(buffer[ind]) == 255) {
       return true;
@@ -73,7 +73,7 @@ bool has_packet(char* buffer) {
   return false;
 }
 
-bool has_valid_packet(char* buffer) {
+bool has_valid_packet(int* buffer) {
   for (int ind = 0; ind < BUFFER_MAX; ind++) {
     if ((int)(buffer[ind]) == 255 && ind == PACKET_MAX + 1) {
       return true;
@@ -82,15 +82,15 @@ bool has_valid_packet(char* buffer) {
   }
 }
 
-void buffer_to_packet(char* buffer, char* packet) {
+void buffer_to_packet(int* buffer, int* packet) {
   for (int ind = 0; ind < PACKET_MAX; ind++) {
     packet[ind] = buffer[ind];
   }
 }
 
-void flush_buffer(char* buffer, int* buf_ind) {
+void flush_buffer(int* buffer, int* buf_ind) {
   for (int ind = 0; ind < BUFFER_MAX; ind++) {
-    buffer[ind] = (char)0;
+    buffer[ind] = 0;
   }
   (*buf_ind) = 0;
 }
