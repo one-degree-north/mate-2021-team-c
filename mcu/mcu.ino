@@ -48,11 +48,9 @@ void loop() {
     char packet[2];
     if (has_packet(buffer)) {
       if (has_valid_packet(buffer)) {
-
+        buffer_to_packet(buffer, packet);
       }
-      else {
-        flush_buffer(buffer, &buf_ind);
-      }
+      flush_buffer(buffer, &buf_ind);
     }
   }
 }
@@ -81,6 +79,12 @@ bool has_valid_packet(char* buffer) {
       return true;
     }
     return false;
+  }
+}
+
+void buffer_to_packet(char* buffer, char* packet) {
+  for (int ind = 0; ind < PACKET_MAX; ind++) {
+    packet[ind] = buffer[ind];
   }
 }
 
