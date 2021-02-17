@@ -46,8 +46,13 @@ void loop() {
   while (Serial.available()) {
     write_to_buffer(buffer, &buf_ind);
     char packet[2];
-    if (has_packet(buffer) && has_valid_packet(buffer)) {
+    if (has_packet(buffer)) {
+      if (has_valid_packet(buffer)) {
 
+      }
+      else {
+        flush_buffer(buffer, &buf_ind);
+      }
     }
   }
 }
@@ -77,6 +82,13 @@ bool has_valid_packet(char* buffer) {
     }
     return false;
   }
+}
+
+void flush_buffer(char* buffer, int* buf_ind) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    buffer[ind] = (char)0;
+  }
+  (*buf_ind) = 0;
 }
 
 void configureD21PWM() {
