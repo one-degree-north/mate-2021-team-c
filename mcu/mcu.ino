@@ -33,13 +33,14 @@ void setup() {
 
 void loop() {
   int buffer[BUFFER_MAX];
+  int packet[PACKET_MAX];
   int buf_ind = 0;
   while (Serial.available()) {
     write_to_buffer(buffer, &buf_ind);
-    int packet[2];
     if (has_packet(buffer)) {
       if (has_valid_packet(buffer)) {
         buffer_to_packet(buffer, packet);
+        execute_packet(packet);
       }
       flush_buffer(buffer, &buf_ind);
     }
