@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Feb  2 16:39:22 2021
-
 @author: ayambabu
 """
 
@@ -22,7 +21,7 @@ class Communications:
         self.cams = []
         for cam_id in cam_ids:
             self.cams.append(camera.Camera(cam_id))
-        self.ser = serial.Serial(str(self.USB), 230400)
+        self.ser = serial.Serial(self.USB, 230400)
         self.ctp = convert_to_packet.Convert_To_Packet()
         #gui.GUI(self.cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
         self.q = Queue()
@@ -57,11 +56,11 @@ class Communications:
         
     def run(self):
         while True:
-            for i in range(int('0'), int('9')+1):
+            """for i in range(int('0'), int('9')+1):
                 self.receive_packets('8' + chr(i) + chr(255))
                 
             self.receive_packets('8' + chr(10) + chr(255))
-            self.receive_packets('8' + chr(11) + chr(255))
+            self.receive_packets('8' + chr(11) + chr(255))"""
             
             while not self.q.empty():
                 self.receive(self.q.get())

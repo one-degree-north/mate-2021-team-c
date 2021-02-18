@@ -1,7 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 17 15:04:29 2021
+
+@author: ayambabu
+"""
+
 key = 'w' #imported from control subsystem
 secKey = 'q'#imported from control subsystem
 ind = ''
-allKeys= ['w', 'a', 'up', 'down', 'd', 'right', 'left', 'spacebar', 'ctrl+w']
+#allKeys= ['w', 's', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'command+w']
 
 
 class Convert_To_Packet:
@@ -64,5 +72,3 @@ class Convert_To_Packet:
             self.ind = '9' + chr(254) + chr(255) # StopTasks
 
         return self.ind
-
-
