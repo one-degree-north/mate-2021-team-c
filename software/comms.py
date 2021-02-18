@@ -28,7 +28,7 @@ class Communications:
         self.PACKET = ""
     
     def kill_op(self):
-        self.encode_and_send('9' + chr(254) + chr(255))
+        self.encode_and_send(chr(9) + chr(254) + chr(255))
     
     def receive(self, keys):
         return self.receive_packets(self.ctp.pack(keys))
@@ -41,7 +41,7 @@ class Communications:
     
     def receive_packets(self, packets):
         line = ""
-        if(packets[0] == '8'):
+        if(packets[0] == chr(8)):
             if(packets[1] == chr(12)):
                 for cam in self.cams:
                     cam.collect_screenshot()
@@ -49,7 +49,7 @@ class Communications:
                 self.encode_and_send(packets) ###
                 line = self.ser.read(NUM_BYTES)
                 
-        elif(packets[0] == '9'):
+        elif(packets[0] == chr(9)):
             self.kill_op()
         else:
             self.encode_and_send(packets)
