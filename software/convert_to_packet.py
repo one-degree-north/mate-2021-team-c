@@ -20,29 +20,29 @@ class Convert_To_Packet:
     def pack(self, keyPressed):
         
         if (keyPressed == 'w'):
-            self.ind = '0'  + chr(50)+ chr(255) # moveForward
+            self.ind = chr(0)  + chr(50)+ chr(255) # moveForward
         elif (keyPressed == 's'):
-            self.ind = '1' + chr(50)+ chr(255) # moveBack
+            self.ind = chr(1) + chr(50)+ chr(255) # moveBack
         elif (keyPressed == 'up'):
-            self.ind = '2' + chr(50)+ chr(255) # moveUp
+            self.ind = chr(2) + chr(50)+ chr(255) # moveUp
         elif (keyPressed == 'down'):
-            self.ind = '3' + chr(50)+ chr(255) # moveBack
+            self.ind = chr(3) + chr(50)+ chr(255) # moveBack
         elif (keyPressed == 'a'):
-            self.ind = '4' +  chr(50)+ chr(255) # moveLeft
+            self.ind = chr(4) +  chr(50)+ chr(255) # moveLeft
         elif (keyPressed == 'd'):
-            self.ind = '5' + chr(50)+ chr(255) # moveRight
+            self.ind = chr(5) + chr(50)+ chr(255) # moveRight
         elif (keyPressed == 'right'):
-            self.ind = '6' + chr(50)+ chr(255) # tiltRight
+            self.ind = chr(6) + chr(50)+ chr(255) # tiltRight
         elif (keyPressed == 'left'):
-            self.ind = '7' + chr(50) + chr(255) # tiltLeft
+            self.ind = chr(7) + chr(50) + chr(255) # tiltLeft
         elif (keyPressed == 'spacebar'):
-            self.ind = '8' + '0' + chr(255) #Take screenshot 
+            self.ind = chr(8) + chr(0) + chr(255) #Take screenshot 
 
             #if (secKey == '1'):
                 #self.ind = '7' + chr(0) + chr(255)# StartAccelerometer
             '''
             if (secKey == '1'):
-                self.ind = '7' + chr(0) + chr(255) # CollectXPos
+                self.ind = chr(7) + chr(0) + chr(255) # CollectXPos
             elif (secKey == '2'):
                 self.ind = '7' + chr(1) + chr(255) # CollectYPos
             elif (secKey == '3'):
@@ -69,6 +69,6 @@ class Convert_To_Packet:
                 self.ind = '8' + chr(0) + chr(255) # Take Screenshot
                 '''
         elif (keyPressed == 'command+w'):
-            self.ind = '9' + chr(254) + chr(255) # StopTasks
+            self.ind = chr(9) + chr(254) + chr(255) # StopTasks
 
         return self.ind
