@@ -6,12 +6,12 @@
 #define SPEED_MID 1500
 #define SPEED_MAX 2000
 
-#define FRONT_LEFT_PIN 9
-#define FRONT_RIGHT_PIN 10
-#define REAR_LEFT_PIN 11
-#define REAR_RIGHT_PIN 12
-#define FORWARD_LEFT_PIN 13
-#define FORWARD_RIGHT_PIN 14
+#define FRONT_LEFT_PIN 6
+#define FRONT_RIGHT_PIN 9
+#define REAR_LEFT_PIN 10
+#define REAR_RIGHT_PIN 11
+#define FORWARD_LEFT_PIN 12
+#define FORWARD_RIGHT_PIN 13
 
 Servo front_left;
 Servo front_right;
