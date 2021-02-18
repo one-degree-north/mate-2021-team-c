@@ -11,10 +11,10 @@ import keyboard
 KEYS = ['w', 's', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'command+w', 'esc']
 
 class Control:
-    def __init__(self, comm, exit):
+    def __init__(self, comm, exit_prog):
         #key_input = pygame.key.get_pressed()
         self.comms = comm
-        self.exit_program = exit
+        self.exit_program = exit_prog
         self.events = None
         self.key_input = None
         pygame.init()
