@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jan 21 15:34:28 2021
-
 @author: ayambabu
 """
 
@@ -25,7 +24,7 @@ def start():
     
     comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
     exit_prog = exit_program.Exit_Program(comm)
-    controls = control.Control(comm, exit_program)
+    controls = control.Control(comm, exit_prog)
 
     comms_thread = threading.Thread(target=comm.run)
     control_thread = threading.Thread(target=controls.run)
