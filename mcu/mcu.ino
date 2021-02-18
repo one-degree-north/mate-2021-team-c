@@ -75,11 +75,11 @@ bool has_packet(int* buffer) {
 
 bool has_valid_packet(int* buffer) {
   for (int ind = 0; ind < BUFFER_MAX; ind++) {
-    if ((int)(buffer[ind]) == 255 && ind == PACKET_MAX + 1) {
+    if ((int)(buffer[ind]) == 255 && ind == PACKET_MAX) {
       return true;
     }
-    return false;
   }
+  return false;
 }
 
 void buffer_to_packet(int* buffer, int* packet) {
