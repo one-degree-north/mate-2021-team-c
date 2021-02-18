@@ -102,12 +102,16 @@ void execute_packet(int* packet) {
 
   switch (cmd_byte) {
     case (int)('0'):
+      move_forward(arg_byte);
       break;
     case (int)('1'):
+      move_backward(arg_byte);
       break;
     case (int)('2'):
+      move_up(arg_byte);
       break;
     case (int)('3'):
+      move_down(arg_byte);
       break;
     case (int)('4'):
       break;
@@ -124,4 +128,32 @@ void execute_packet(int* packet) {
     default:
       break;
   }
+}
+
+void move_forward(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
+  forward_left.writeMicroseconds(power);
+  forward_right.writeMicroseconds(power);
+}
+
+void move_backward(int arg_byte) {
+  int power = SPEED_MID - arg_byte;
+  forward_left.writeMicroseconds(power);
+  forward_right.writeMicroseconds(power);
+}
+
+void move_up(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
+  front_left.writeMicroseconds(power);
+  front_right.writeMicroseconds(power);
+  rear_left.writeMicroseconds(power);
+  rear_right.writeMicroseconds(power);
+}
+
+void move_down(int arg_byte) {
+  int power = SPEED_MID - arg_byte;
+  front_left.writeMicroseconds(power);
+  front_right.writeMicroseconds(power);
+  rear_left.writeMicroseconds(power);
+  rear_right.writeMicroseconds(power);
 }
