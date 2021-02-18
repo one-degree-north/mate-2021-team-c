@@ -1,182 +1,159 @@
-// Basic demo for accelerometer readings from Adafruit ICM20649
-
-#include <Adafruit_ICM20649.h>
-#include <Adafruit_Sensor.h>
 #include <Wire.h>
 #include <Servo.h>
 #include <Arduino.h>
-#include "Adafruit_ZeroTimer.h"
 
-#if defined(LED_BUILTIN)
-#define pin  LED_BUILTIN
-#else
-#define pin  D2
-#endif
-
+#define SPEED_MIN 1000
+#define SPEED_MID 1500
 #define SPEED_MAX 2000
 
-int motorPin = 10;
+#define FRONT_LEFT_PIN 6
+#define FRONT_RIGHT_PIN 9
+#define REAR_LEFT_PIN 10
+#define REAR_RIGHT_PIN 11
+#define FORWARD_LEFT_PIN 12
+#define FORWARD_RIGHT_PIN 13
 
-Adafruit_ICM20649 icm;
-uint16_t measurement_delay_us = 65535; // Delay between measurements for testing
-// For SPI mode, we need a CS pin
-#define ICM_CS 10
-// For software-SPI mode we need SCK/MOSI/MISO pins
-#define ICM_SCK 13
-#define ICM_MISO 12
-#define ICM_MOSI 11
+Servo front_left;
+Servo front_right;
+Servo rear_left;
+Servo rear_right;
+Servo forward_left;
+Servo forward_right;
 
-// timer tester
-Adafruit_ZeroTimer zt3 = Adafruit_ZeroTimer(3);
-//   Timer3: channel 0 on D2 or D10, channel 1 on D5 or D12
-
-void setup(void) {
-
- 
-  
+void setup() {
+  setup_motors();
+  delay(2000);
   Serial.begin(115200);
   while (!Serial)
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
-
-  Serial.println("Adafruit ICM20649 test!");
-
-  // Try to initialize!
-  if (!icm.begin_I2C()) {
-    // if (!icm.begin_SPI(ICM_CS)) {
-    // if (!icm.begin_SPI(ICM_CS, ICM_SCK, ICM_MISO, ICM_MOSI)) {
-
-    Serial.println("Failed to find ICM20649 chip");
-    while (1) {
-      delay(10);
-    }
-  }
-  else {
-    Serial.println("should be working");
-  }
-  
-  Serial.println("ICM20649 Found!");
-  // icm.setAccelRange(ICM20649_ACCEL_RANGE_4_G);
-  Serial.print("Accelerometer range set to: ");
-  switch (icm.getAccelRange()) {
-  case ICM20649_ACCEL_RANGE_4_G:
-    Serial.println("+-4G");
-    break;
-  case ICM20649_ACCEL_RANGE_8_G:
-    Serial.println("+-8G");
-    break;
-  case ICM20649_ACCEL_RANGE_16_G:
-    Serial.println("+-16G");
-    break;
-  case ICM20649_ACCEL_RANGE_30_G:
-    Serial.println("+-30G");
-    break;
-  }
-
-  // icm.setGyroRange(ICM20649_GYRO_RANGE_500_DPS);
-  Serial.print("Gyro range set to: ");
-  switch (icm.getGyroRange()) {
-  case ICM20649_GYRO_RANGE_500_DPS:
-    Serial.println("500 degrees/s");
-    break;
-  case ICM20649_GYRO_RANGE_1000_DPS:
-    Serial.println("1000 degrees/s");
-    break;
-  case ICM20649_GYRO_RANGE_2000_DPS:
-    Serial.println("2000 degrees/s");
-    break;
-  case ICM20649_GYRO_RANGE_4000_DPS:
-    Serial.println("4000 degrees/s");
-    break;
-  }
-
-  //  icm.setAccelRateDivisor(4095);
-  uint16_t accel_divisor = icm.getAccelRateDivisor();
-  float accel_rate = 1125 / (1.0 + accel_divisor);
-
-  Serial.print("Accelerometer data rate divisor set to: ");
-  Serial.println(accel_divisor);
-  Serial.print("Accelerometer data rate (Hz) is approximately: ");
-  Serial.println(accel_rate);
-
-  //  icm.setGyroRateDivisor(255);
-  uint8_t gyro_divisor = icm.getGyroRateDivisor();
-  float gyro_rate = 1100 / (1.0 + gyro_divisor);
-
-  Serial.print("Gyro data rate divisor set to: ");
-  Serial.println(gyro_divisor);
-  Serial.print("Gyro data rate (Hz) is approximately: ");
-  Serial.println(gyro_rate);
-  Serial.println();
-
-  pinMode(motorPin, OUTPUT);
-  Serial.begin(9600);
-  while (! Serial);
-  Serial.println(255);
-
-  configureD21PWM();
 } 
-void configureD21PWM(){
- zt3.configure(TC_CLOCK_PRESCALER_DIV1, // prescaler
-                TC_COUNTER_SIZE_16BIT,   // bit width of timer/counter
-                TC_WAVE_GENERATION_NORMAL_PWM // frequency or PWM mode
-                );
-  if (! zt3.PWMout(true, 0, 10)) {
-    Serial.println("Failed to configure PWM output");
-  }
-  if (! zt3.PWMout(true, 1, 12)) {
-    Serial.println("Failed to configure PWM output");
-  }
-  zt3.setPeriodMatch(SPEED_MAX, 0, 0);
-  zt3.setPeriodMatch(SPEED_MAX, 0, 1);
-  zt3.enable(true);
-}
+
+#define BUFFER_MAX 8
+#define PACKET_MAX 2
+
 void loop() {
-  // code for integrating motors into the accel-gyro code
-  if (Serial.available())
-  {
-    int speed = Serial.parseInt();
-    if (speed >= 0 && speed <= SPEED_MAX)
-    {
-      zt3.setPeriodMatch(SPEED_MAX, speed, 0);
-      zt3.setPeriodMatch(SPEED_MAX, speed, 1);
-     // analogWrite(motorPin, speed / 100);
-    //zt3.setCompare(speed, 0); // this is for pin 10 (line 13)
-    //zt3.setCompare(speed, 1); // this is for pin 12 (line 17)
-      Serial.println(String(speed));
+  int buffer[BUFFER_MAX];
+  int packet[PACKET_MAX];
+  int buf_ind = 0;
+  while (Serial.available()) {
+    write_to_buffer(buffer, &buf_ind);
+    if (has_packet(buffer)) {
+      if (has_valid_packet(buffer)) {
+        buffer_to_packet(buffer, packet);
+        execute_packet(packet);
+      }
+      flush_buffer(buffer, &buf_ind);
     }
   }
 }
 
-void doSensorStuff(){
-  sensors_event_t accel;
-  sensors_event_t gyro;
-  sensors_event_t temp;
-  icm.getEvent(&accel, &gyro, &temp);
+void setup_motors() {
+  front_left.attach(FRONT_LEFT_PIN);
+  front_right.attach(FRONT_RIGHT_PIN);
+  rear_left.attach(REAR_LEFT_PIN);
+  rear_right.attach(REAR_RIGHT_PIN);
+  forward_left.attach(FORWARD_LEFT_PIN);
+  forward_right.attach(FORWARD_RIGHT_PIN);
+}
 
-  Serial.print("\t\tTemperature ");
-  Serial.print(temp.temperature);
-  Serial.println(" deg C");
+void write_to_buffer(int* buffer, int* buf_ind) {
+  int buf_byte = Serial.read();
+  if (buf_byte == -1) {
+    return;
+  }
+  buffer[*buf_ind] = buf_byte;
+  (*buf_ind)++;
+}
 
-  /* Display the results (acceleration is measured in m/s^2) */
-  Serial.print("\t\tAccel X: ");
-  Serial.print(accel.acceleration.x);
-  Serial.print(" \tY: ");
-  Serial.print(accel.acceleration.y);
-  Serial.print(" \tZ: ");
-  Serial.print(accel.acceleration.z);
-  Serial.println(" m/s^2 ");
+bool has_packet(int* buffer) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    if ((int)(buffer[ind]) == 255) {
+      return true;
+    }
+  }
+  return false;
+}
 
-  /* Display the results (acceleration is measured in m/s^2) */
-  Serial.print("\t\tGyro X: ");
-  Serial.print(gyro.gyro.x);
-  Serial.print(" \tY: ");
-  Serial.print(gyro.gyro.y);
-  Serial.print(" \tZ: ");
-  Serial.print(gyro.gyro.z);
-  Serial.println(" radians/s ");
-  Serial.println();
+bool has_valid_packet(int* buffer) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    if ((int)(buffer[ind]) == 255 && ind == PACKET_MAX) {
+      return true;
+    }
+  }
+  return false;
+}
 
-  delay(100);
+void buffer_to_packet(int* buffer, int* packet) {
+  for (int ind = 0; ind < PACKET_MAX; ind++) {
+    packet[ind] = buffer[ind];
+  }
+}
 
+void flush_buffer(int* buffer, int* buf_ind) {
+  for (int ind = 0; ind < BUFFER_MAX; ind++) {
+    buffer[ind] = 0;
+  }
+  (*buf_ind) = 0;
+}
 
+void execute_packet(int* packet) {
+  int cmd_byte = packet[0];
+  int arg_byte = packet[1];
+
+  switch (cmd_byte) {
+    case 0:
+      move_forward(arg_byte);
+      break;
+    case 1:
+      move_backward(arg_byte);
+      break;
+    case 2:
+      move_up(arg_byte);
+      break;
+    case 3:
+      move_down(arg_byte);
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
+    case 6:
+      break;
+    case 7:
+      break;
+    case 8:
+      break;
+    case 9:
+      break;
+    default:
+      break;
+  }
+}
+
+void move_forward(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
+  forward_left.writeMicroseconds(power);
+  forward_right.writeMicroseconds(power);
+}
+
+void move_backward(int arg_byte) {
+  int power = SPEED_MID - arg_byte;
+  forward_left.writeMicroseconds(power);
+  forward_right.writeMicroseconds(power);
+}
+
+void move_up(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
+  front_left.writeMicroseconds(power);
+  front_right.writeMicroseconds(power);
+  rear_left.writeMicroseconds(power);
+  rear_right.writeMicroseconds(power);
+}
+
+void move_down(int arg_byte) {
+  int power = SPEED_MID - arg_byte;
+  front_left.writeMicroseconds(power);
+  front_right.writeMicroseconds(power);
+  rear_left.writeMicroseconds(power);
+  rear_right.writeMicroseconds(power);
 }
