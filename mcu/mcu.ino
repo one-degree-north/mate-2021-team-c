@@ -101,29 +101,29 @@ void execute_packet(int* packet) {
   int arg_byte = packet[1];
 
   switch (cmd_byte) {
-    case (int)('0'):
+    case 0:
       move_forward(arg_byte);
       break;
-    case (int)('1'):
+    case 1:
       move_backward(arg_byte);
       break;
-    case (int)('2'):
+    case 2:
       move_up(arg_byte);
       break;
-    case (int)('3'):
+    case 3:
       move_down(arg_byte);
       break;
-    case (int)('4'):
+    case 4:
       break;
-    case (int)('5'):
+    case 5:
       break;
-    case (int)('6'):
+    case 6:
       break;
-    case (int)('7'):
+    case 7:
       break;
-    case (int)('8'):
+    case 8:
       break;
-    case (int)('9'):
+    case 9:
       break;
     default:
       break;
