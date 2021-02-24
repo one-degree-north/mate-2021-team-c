@@ -147,6 +147,8 @@ void flush_buffer(int* buffer, int* buf_ind) {
 
 // Executes the packet `packet` based on the two significant bytes. The first byte indicates the
 // command to be executed, and the second byte indicates the argument for the command.
+// Executes the commands based on the following document:
+// https://docs.google.com/document/d/1TtKtFwUutYwbIac_FjjTdN0an4Zpzbw5fHmSIN9APws/edit
 void execute_packet(int* packet) {
   int cmd_byte = packet[0];
   int arg_byte = packet[1];
