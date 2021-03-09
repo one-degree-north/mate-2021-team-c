@@ -1,4 +1,4 @@
-import pygame
+"""import pygame
 
 key = 'w' #imported from control subsystem
 secKey = 'q'#imported from control subsystem
@@ -73,6 +73,6 @@ class Convert_To_Packet:
                         #self.ind = '8' + '0' + chr(255) #Take screenshot
                     
 
-                    
+"""
 
     
