@@ -10,6 +10,7 @@ import pygame
 import convert_to_packet
 # import gui
 import camera
+import sys
 
 #from queue import Queue
 
@@ -28,6 +29,7 @@ class Communications:
         self.PACKET = ""
     
     def kill_op(self):
+        sys.exit()
         self.encode_and_send(chr(9) + chr(254) + chr(255))
     
     #def receive(self, keys):
@@ -36,6 +38,8 @@ class Communications:
     def encode_and_send(self, packets):
         for c in packets:
             self.ser.write(c.encode("latin"))
+            #print(c)
+        print(packets)
     
     def receive(self, packets):
         line = ""
