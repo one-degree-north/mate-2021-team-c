@@ -31,32 +31,34 @@ class Control:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        ind = '0'+ chr(50)+ chr(255) # moveForward
+                        ind = chr(0)+ chr(50)+ chr(255) # moveForward
                         on_trigger(ind)
                     if (event.key == pygame.K_s):
-                        ind = '1' + chr(50)+ chr(255) # moveBack
+                        ind = chr(1) + chr(50)+ chr(255) # moveBack
                         on_trigger(ind)
                     if (event.key == pygame.K_UP):
-                        ind = '2' + chr(50)+ chr(255) # moveUp
+                        ind = chr(2) + chr(50)+ chr(255) # moveUp
                         on_trigger(ind)
                     if (event.key == pygame.K_DOWN):
-                        ind = '3' + chr(50)+ chr(255) # moveBack
+                        ind = chr(3) + chr(50)+ chr(255) # moveBack
                         on_trigger(ind)
                     if (event.key == pygame.K_a):
-                        ind = '4' +  chr(50)+ chr(255) # moveLeft
+                        ind = chr(4) +  chr(50)+ chr(255) # moveLeft
                         on_trigger(ind)
                     if (event.key == pygame.K_d):
-                        ind = '5' + chr(50)+ chr(255) # moveRight
+                        ind = chr(5) + chr(50)+ chr(255) # moveRight
                         on_trigger(ind)
                     if (event.key == pygame.K_RIGHT):
-                        ind = '6' + chr(50)+ chr(255) #Turn Right
+                        ind = chr(6) + chr(50)+ chr(255) #Turn Right
                         on_trigger(ind)
                     if (event.key == pygame.K_LEFT):
-                        ind = '7' + chr(50) + chr(255) #TurnLeft
+                        ind = chr(7) + chr(50) + chr(255) #TurnLeft
                         on_trigger(ind)
                     if (event.key == pygame.K_SPACE):
-                        ind = '8' + '0' + chr(255) #Take screenshot
+                        ind = chr(8) + '0' + chr(255) #Take screenshot
                         on_trigger(ind)
+                    if (event.key == pygame.K_ESCAPE):
+                        self.comms.kill_op()
                     #print(self.ind)
 
 
