@@ -26,10 +26,10 @@ def start():
     exit_prog = exit_program.Exit_Program(comm)
     controls = control.Control(comm, exit_prog)
 
-    comms_thread = threading.Thread(target=comm.run)
+    #comms_thread = threading.Thread(target=comm.run)
     control_thread = threading.Thread(target=controls.run)
     
-    comms_thread.start()
+    #comms_thread.start()
     control_thread.start()
     #gui.GUI(SCREEN_DIMENSIONS, FPS, CAM_IDS)
 
