@@ -40,7 +40,7 @@ class Communications:
             self.ser.write(c.encode("latin"))
             #print(c)
         #print(packets)
-    
+ 
     def receive(self, packets):
         line = ""
         if(packets[0] == chr(8)):
