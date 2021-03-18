@@ -31,7 +31,7 @@ class Communications:
         self.encode_and_send(chr(9) + chr(254) + chr(255))
     
     def receive(self, keys):
-        return self.receive_packets(self.ctp.pack(keys))
+        return self.receive_packets(keys)
         
     def encode_and_send(self, packets):
         for c in packets:
