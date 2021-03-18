@@ -39,7 +39,7 @@ class Communications:
         for c in packets:
             self.ser.write(c.encode("latin"))
             #print(c)
-        print(packets)
+        #print(packets)
     
     def receive(self, packets):
         line = ""
