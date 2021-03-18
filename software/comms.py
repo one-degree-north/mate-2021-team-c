@@ -11,7 +11,7 @@ import convert_to_packet
 # import gui
 import camera
 
-from queue import Queue
+#from queue import Queue
 
 NUM_BYTES = 3
 
@@ -21,23 +21,23 @@ class Communications:
         self.cams = []
         for cam_id in cam_ids:
             self.cams.append(camera.Camera(cam_id))
-        self.ser = serial.Serial(self.USB, 230400)
-        self.ctp = convert_to_packet.Convert_To_Packet()
+        self.ser = serial.Serial(self.USB, 115200)
+        #self.ctp = convert_to_packet.Convert_To_Packet()
         #gui.GUI(self.cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
-        self.q = Queue()
+        #self.q = Queue()
         self.PACKET = ""
     
     def kill_op(self):
         self.encode_and_send(chr(9) + chr(254) + chr(255))
     
-    def receive(self, keys):
-        return self.receive_packets(keys)
+    #def receive(self, keys):
+       # return self.receive_packets(keys)
         
     def encode_and_send(self, packets):
         for c in packets:
             self.ser.write(c.encode("latin"))
     
-    def receive_packets(self, packets):
+    def receive(self, packets):
         line = ""
         if(packets[0] == chr(8)):
             if(packets[1] == chr(12)):
@@ -54,15 +54,16 @@ class Communications:
                 
         return line
         
-    def run(self):
+    """def run(self):
         while True:
-            """for i in range(int('0'), int('9')+1):
+            for i in range(int('0'), int('9')+1):
                 self.receive_packets('8' + chr(i) + chr(255))
                 
             self.receive_packets('8' + chr(10) + chr(255))
-            self.receive_packets('8' + chr(11) + chr(255))"""
+            self.receive_packets('8' + chr(11) + chr(255))
             
             while not self.q.empty():
                 self.receive(self.q.get())
             
             # Take camera pic for GUI
+    """
