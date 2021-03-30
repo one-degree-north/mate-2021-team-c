@@ -20,6 +20,7 @@ class Control:
         self.key_input = None
         pygame.init()
         self.screen = pygame.display.set_mode([500,500])
+        self.screen.fill((255, 255, 255))
         
         
     def on_trigger(self, keys):
@@ -27,7 +28,6 @@ class Control:
         
     def run(self):
         running = True
-        self.screen.fill((255, 255, 255))
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
