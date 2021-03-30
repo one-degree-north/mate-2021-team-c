@@ -40,8 +40,7 @@ class Communications:
         
     def encode_and_send(self, packets):
         self.ser.write(packets.encode("latin"))
-            #print(c)
-        print(packets)
+        print("sent")
  
     def receive(self, packets):
         line = ""
