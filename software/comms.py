@@ -36,7 +36,7 @@ class Communications:
        # return self.receive_packets(keys)
         
     def encode_and_send(self, packets):
-        self.ser.write(packets)
+        self.ser.write(packets.encode("latin"))
             #print(c)
         print(packets)
  
