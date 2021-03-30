@@ -26,6 +26,9 @@ class Communications:
         #self.ctp = convert_to_packet.Convert_To_Packet()
         #gui.GUI(self.cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
         #self.q = Queue()
+        ser.close()
+        ser.open()
+        
         self.PACKET = ""
     
     def kill_op(self):
