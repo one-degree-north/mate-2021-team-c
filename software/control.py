@@ -23,7 +23,7 @@ class Control:
         
         
     def on_trigger(self, keys):
-        self.comms.receive(keys)
+        self.comms.encode_and_send(keys)
         
     def run(self):
         running = True
