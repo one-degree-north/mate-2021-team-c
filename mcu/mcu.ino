@@ -167,8 +167,10 @@ void execute_packet(int* packet) {
       move_down(arg_byte);
       break;
     case 4:
+      turn_left(arg_byte);
       break;
     case 5:
+      turn_right(arg_byte);
       break;
     case 6:
       break;
@@ -209,4 +211,14 @@ void move_down(int arg_byte) {
   front_right.writeMicroseconds(power);
   rear_left.writeMicroseconds(power);
   rear_right.writeMicroseconds(power);
+}
+
+void turn_left(int arg_byte) {
+  int power = SPEED_MIN + arg_byte;
+  forward_right.writeMicroseconds(power);
+}
+
+void turn_right(int arg_byte) {
+  int power = SPEED_MIN + arg_byte;
+  forward_left.writeMicroseconds(power);
 }
