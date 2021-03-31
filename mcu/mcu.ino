@@ -188,13 +188,15 @@ void execute_packet(int* packet) {
 }
 
 void move_forward(int arg_byte) {
-  int power = SPEED_MID + arg_byte;
-  forward_left.writeMicroseconds(power);
-  forward_right.writeMicroseconds(power);
+  move_straight(arg_byte);
 }
 
 void move_backward(int arg_byte) {
-  int power = SPEED_MID - arg_byte;
+  move_straight(-1 * arg_byte);
+}
+
+void move_straight(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
   forward_left.writeMicroseconds(power);
   forward_right.writeMicroseconds(power);
 }
