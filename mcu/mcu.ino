@@ -173,8 +173,10 @@ void execute_packet(int* packet) {
       turn_right(arg_byte);
       break;
     case 6:
+      tilt_right(arg_byte);
       break;
     case 7:
+      tilt_left(arg_byte);
       break;
     case 8:
       break;
@@ -221,4 +223,21 @@ void turn_left(int arg_byte) {
 void turn_right(int arg_byte) {
   int power = SPEED_MIN + arg_byte;
   forward_left.writeMicroseconds(power);
+}
+
+void tilt_left(int arg_byte) {
+  tilt_side(arg_byte);
+}
+
+void tilt_right(int arg_byte) {
+  tilt_side(-1 * arg_byte);
+}
+
+void tilt_side(int arg_byte) {
+  int right_power = SPEED_MID + arg_byte;
+  int left_power = SPEED_MID - arg_byte;
+  front_right.writeMicroseconds(right_power);
+  rear_right.writeMicroseconds(right_power);
+  front_left.writeMicroseconds(left_power);
+  rear_left.writeMicroseconds(left_power);
 }
