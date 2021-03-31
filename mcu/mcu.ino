@@ -200,15 +200,15 @@ void move_backward(int arg_byte) {
 }
 
 void move_up(int arg_byte) {
-  int power = SPEED_MID + arg_byte;
-  front_left.writeMicroseconds(power);
-  front_right.writeMicroseconds(power);
-  rear_left.writeMicroseconds(power);
-  rear_right.writeMicroseconds(power);
+  move_vertical(arg_byte);
 }
 
 void move_down(int arg_byte) {
-  int power = SPEED_MID - arg_byte;
+  move_vertical(-1 * arg_byte);
+}
+
+void move_vertical(int arg_byte) {
+  int power = SPEED_MID + arg_byte;
   front_left.writeMicroseconds(power);
   front_right.writeMicroseconds(power);
   rear_left.writeMicroseconds(power);
