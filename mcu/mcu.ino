@@ -217,14 +217,19 @@ void move_down(int arg_byte) {
   move_vertical(-1 * arg_byte);
 }
 
+void turn_direction(int arg_byte) {
+  int push_power = SPEED_MID + arg_byte;
+  int pull_power = SPEED_MID - arg_byte;
+  forward_right.writeMicroseconds(push_power);
+  forward_left.writeMicroseconds(pull_power);
+}
+
 void turn_left(int arg_byte) {
-  int power = SPEED_MIN + arg_byte;
-  forward_right.writeMicroseconds(power);
+  turn_direction(arg_byte);
 }
 
 void turn_right(int arg_byte) {
-  int power = SPEED_MIN + arg_byte;
-  forward_left.writeMicroseconds(power);
+  turn_direction(-1 * arg_byte);
 }
 
 void tilt_side(int arg_byte) {
