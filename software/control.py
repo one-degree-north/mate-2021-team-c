@@ -6,22 +6,18 @@ Created on Tue Jan 26 16:08:11 2021
 """
 
 import pygame
-import keyboard
 import comms
 
-#KEYS = ['w', 's', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'command+w', 'esc']
-
 class Control:
-    def __init__(self, comm, exit_prog, SPEED):
-        #key_input = pygame.key.get_pressed()
+    def __init__(self, comm, exit_prog, POWER):
         self.comms = comm
         self.exit_program = exit_prog
-        self.events = None
-        self.key_input = None
         pygame.init()
-        self.screen = pygame.display.set_mode([500,500])
-        self.screen.fill((255, 255, 255))
-        self.POWER = SPEED
+        self.SCREEN_DIMS = [500,500]
+        self.SCREEN_COLOR = (255, 255, 255)
+        self.screen = pygame.display.set_mode(self.SCREEN_DIMS)
+        self.screen.fill(self.SCREEN_COLOR)
+        self.POWER = POWER
         
         
     def on_trigger(self, keys):
@@ -36,70 +32,71 @@ class Control:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        ind = chr(0)+ chr(self.POWER)+ chr(255) # moveForward
-                        self.on_trigger(ind)
+                        packet = chr(0)+ chr(self.POWER)+ chr(255) # moveForward
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_s):
-                        ind = chr(1) + chr(self.POWER)+ chr(255) # moveBack
-                        self.on_trigger(ind)
+                        packet = chr(1) + chr(self.POWER)+ chr(255) # moveBack
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_UP):
-                        ind = chr(2) + chr(self.POWER)+ chr(255) # moveUp
-                        self.on_trigger(ind)
+                        packet = chr(2) + chr(self.POWER)+ chr(255) # moveUp
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_DOWN):
-                        ind = chr(3) + chr(self.POWER)+ chr(255) # moveBack
-                        self.on_trigger(ind)
+                        packet = chr(3) + chr(self.POWER)+ chr(255) # moveBack
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_a):
-                        ind = chr(4) +  chr(self.POWER)+ chr(255) # moveLeft
-                        self.on_trigger(ind)
+                        packet = chr(4) +  chr(self.POWER)+ chr(255) # moveLeft
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_d):
-                        ind = chr(5) + chr(self.POWER)+ chr(255) # moveRight
-                        self.on_trigger(ind)
+                        packet = chr(5) + chr(self.POWER)+ chr(255) # moveRight
+                        self.on_trigger(paclet)
                     if (event.key == pygame.K_RIGHT):
-                        ind = chr(6) + chr(self.POWER)+ chr(255) #Turn Right
-                        self.on_trigger(ind)
+                        packet = chr(6) + chr(self.POWER)+ chr(255) #Turn Right
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_LEFT):
-                        ind = chr(7) + chr(self.POWER) + chr(255) #TurnLeft
-                        self.on_trigger(ind)
+                        packet = chr(7) + chr(self.POWER) + chr(255) #TurnLeft
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_SPACE):
-                        ind = chr(8) + '0' + chr(255) #Take screenshot
-                        self.on_trigger(ind)
+                        packet = chr(8) + '0' + chr(255) #Take screenshot
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_ESCAPE):
-                        self.exit_program.Exit()
-                    #print(self.ind)
+                        running = False
+                    #print(self.packet)
 
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w:
-                        ind = chr(0) + chr(0) + chr(255) # moveForward
-                        self.on_trigger(ind)
+                        packet = chr(0) + chr(0) + chr(255) # moveForward
+                        self.on_trigger(packet)
                         #print('w')
                     if (event.key == pygame.K_s):
-                        ind = chr(1) + chr(0)+ chr(255) # moveBack
-                        self.on_trigger(ind)
+                        packet = chr(1) + chr(0)+ chr(255) # moveBack
+                        self.on_trigger(packet)
                         #print('s')
                     if (event.key == pygame.K_UP):
-                        ind = chr(2) + chr(0)+ chr(255) # moveUp
-                        self.on_trigger(ind)
+                        packet = chr(2) + chr(0)+ chr(255) # moveUp
+                        self.on_trigger(packet)
                         #print('up')
                     if (event.key == pygame.K_DOWN):
-                        ind = chr(3) + chr(0)+ chr(255) # moveBack
-                        self.on_trigger(ind)
+                        packet = chr(3) + chr(0)+ chr(255) # moveBack
+                        self.on_trigger(packet)
                         #print('down')
                     if (event.key == pygame.K_a):
-                        ind = chr(4) +  chr(0)+ chr(255) # moveLeft
-                        self.on_trigger(ind)
+                        packet = chr(4) +  chr(0)+ chr(255) # moveLeft
+                        self.on_trigger(packet)
                         #print('a')
                     if (event.key == pygame.K_d):
-                        ind = chr(5) + chr(0)+ chr(255) # moveRight
-                        self.on_trigger(ind)
+                        packet = chr(5) + chr(0)+ chr(255) # moveRight
+                        self.on_trigger(packet)
                         #print('d')
                     if (event.key == pygame.K_RIGHT):
-                        ind = chr(6) + chr(0)+ chr(255) #Turn Right
-                        self.on_trigger(ind)
+                        packet = chr(6) + chr(0)+ chr(255) #Turn Right
+                        self.on_trigger(packet)
                         #print('right')
                     if (event.key == pygame.K_LEFT):
-                        ind = chr(7) + chr(0) + chr(255) #TurnLeft
-                        self.on_trigger(ind)
+                        packet = chr(7) + chr(0) + chr(255) #TurnLeft
+                        self.on_trigger(packet)
                         #print('left')
                     #elif (event.key == pygame.K_SPACE):
-                        #self.ind = '8' + '0' + chr(255) #Take screenshot
+                        #self.packet = '8' + '0' + chr(255) #Take screenshot
             pygame.display.flip()
+        self.exit_program.Exit()   
