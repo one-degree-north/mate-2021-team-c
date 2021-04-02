@@ -12,7 +12,7 @@ import comms
 #KEYS = ['w', 's', 'up', 'down', 'a', 'd', 'right', 'left', 'spacebar', 'command+w', 'esc']
 
 class Control:
-    def __init__(self, comm, exit_prog):
+    def __init__(self, comm, exit_prog, speed):
         #key_input = pygame.key.get_pressed()
         self.comms = comm
         self.exit_program = exit_prog
@@ -21,6 +21,7 @@ class Control:
         pygame.init()
         self.screen = pygame.display.set_mode([500,500])
         self.screen.fill((255, 255, 255))
+        self.arg_byte = speed
         
         
     def on_trigger(self, keys):
@@ -35,28 +36,28 @@ class Control:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        ind = chr(0)+ chr(50)+ chr(255) # moveForward
+                        ind = chr(0)+ chr(self.arg_byte)+ chr(255) # moveForward
                         self.on_trigger(ind)
                     if (event.key == pygame.K_s):
-                        ind = chr(1) + chr(50)+ chr(255) # moveBack
+                        ind = chr(1) + chr(self.arg_byte)+ chr(255) # moveBack
                         self.on_trigger(ind)
                     if (event.key == pygame.K_UP):
-                        ind = chr(2) + chr(50)+ chr(255) # moveUp
+                        ind = chr(2) + chr(self.arg_byte)+ chr(255) # moveUp
                         self.on_trigger(ind)
                     if (event.key == pygame.K_DOWN):
-                        ind = chr(3) + chr(50)+ chr(255) # moveBack
+                        ind = chr(3) + chr(self.arg_byte)+ chr(255) # moveBack
                         self.on_trigger(ind)
                     if (event.key == pygame.K_a):
-                        ind = chr(4) +  chr(50)+ chr(255) # moveLeft
+                        ind = chr(4) +  chr(self.arg_byte)+ chr(255) # moveLeft
                         self.on_trigger(ind)
                     if (event.key == pygame.K_d):
-                        ind = chr(5) + chr(50)+ chr(255) # moveRight
+                        ind = chr(5) + chr(self.arg_byte)+ chr(255) # moveRight
                         self.on_trigger(ind)
                     if (event.key == pygame.K_RIGHT):
-                        ind = chr(6) + chr(50)+ chr(255) #Turn Right
+                        ind = chr(6) + chr(self.arg_byte)+ chr(255) #Turn Right
                         self.on_trigger(ind)
                     if (event.key == pygame.K_LEFT):
-                        ind = chr(7) + chr(50) + chr(255) #TurnLeft
+                        ind = chr(7) + chr(self.arg_byte) + chr(255) #TurnLeft
                         self.on_trigger(ind)
                     if (event.key == pygame.K_SPACE):
                         ind = chr(8) + '0' + chr(255) #Take screenshot
