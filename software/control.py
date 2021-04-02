@@ -63,7 +63,7 @@ class Control:
                         ind = chr(8) + '0' + chr(255) #Take screenshot
                         self.on_trigger(ind)
                     if (event.key == pygame.K_ESCAPE):
-                        self.comms.kill_op()
+                        self.exit_program.Exit()
                     #print(self.ind)
 
 
