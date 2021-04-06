@@ -16,11 +16,12 @@ SCREEN_DIMENSIONS = () # width, height
 FPS = 30
 CAM_IDS = [1]
 SPEED = 100
+BAUD_RATE = 115200
 comm = None
 exit_prog = None
 
 def start():
-    comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS)
+    comm = comms.Communications(USB, SCREEN_DIMENSIONS, FPS, CAM_IDS, BAUD_RATE)
     exit_prog = exit_program.Exit_Program(comm)
     controls = control.Control(comm, exit_prog, SPEED)
     control_thread = threading.Thread(target=controls.run)
