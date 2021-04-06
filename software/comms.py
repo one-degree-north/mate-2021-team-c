@@ -14,7 +14,7 @@ import sys
 NUM_BYTES = 3
 
 class Communications:
-    def __init__(self, usb, SCREEN_DIMENSIONS, FPS, cam_ids, BAUD_RATE):
+    def __init__(self, usb, SCREEN_DIMENSIONS, cam_ids, BAUD_RATE):
         self.USB = usb
         self.cams = []
         for cam_id in cam_ids:
@@ -22,8 +22,6 @@ class Communications:
         self.ser = serial.Serial(self.USB, BAUD_RATE)
         self.ser.close()
         self.ser.open()
-        
-        self.PACKET = ""
     
     def kill_op(self):
         sys.exit()
