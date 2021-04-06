@@ -17,8 +17,9 @@ class Control:
         self.SCREEN_COLOR = (255, 255, 255)
         self.screen = pygame.display.set_mode(self.SCREEN_DIMS)
         self.screen.fill(self.SCREEN_COLOR)
-        self.POWER = POWER
-        
+        self.POWER_BYTE = chr(POWER)
+        self.REST_BYTE = chr(0)
+        self.TERMINAL_BYTE = chr(255)
         
     def on_trigger(self, keys):
         self.comms.encode_and_send(keys)
@@ -29,74 +30,85 @@ class Control:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    
+                
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
-                        packet = chr(0)+ chr(self.POWER)+ chr(255) # moveForward
+                        cmd_byte = chr(0)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveForward
                         self.on_trigger(packet)
                     if (event.key == pygame.K_s):
-                        packet = chr(1) + chr(self.POWER)+ chr(255) # moveBack
+                        cmd_byte = chr(1)
+                        packet = cmd_byte + self.POWER_BYTE+ self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
                     if (event.key == pygame.K_UP):
-                        packet = chr(2) + chr(self.POWER)+ chr(255) # moveUp
+                        cmd_byte = chr(2)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveUp
                         self.on_trigger(packet)
                     if (event.key == pygame.K_DOWN):
-                        packet = chr(3) + chr(self.POWER)+ chr(255) # moveBack
+                        cmd_byte = chr(3)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
                     if (event.key == pygame.K_a):
-                        packet = chr(4) +  chr(self.POWER)+ chr(255) # moveLeft
+                        cmd_byte = chr(4)
+                        packet = cmd_byte +  self.POWER_BYTE + self.TERMINAL_BYTE # moveLeft
                         self.on_trigger(packet)
                     if (event.key == pygame.K_d):
-                        packet = chr(5) + chr(self.POWER)+ chr(255) # moveRight
+                        cmd_byte = chr(5)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveRight
                         self.on_trigger(paclet)
                     if (event.key == pygame.K_RIGHT):
-                        packet = chr(6) + chr(self.POWER)+ chr(255) #Turn Right
+                        cmd_byte = chr(6)
+                        packet = cmd_byte + self.POWER_BYTE+ self.TERMINAL_BYTE #Turn Right
                         self.on_trigger(packet)
                     if (event.key == pygame.K_LEFT):
-                        packet = chr(7) + chr(self.POWER) + chr(255) #TurnLeft
-                        self.on_trigger(packet)
-                    if (event.key == pygame.K_SPACE):
-                        packet = chr(8) + '0' + chr(255) #Take screenshot
+                        cmd_byte = chr(7)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE #TurnLeft
                         self.on_trigger(packet)
                     if (event.key == pygame.K_ESCAPE):
                         running = False
-                    #print(self.packet)
-
-
+                    
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w:
-                        packet = chr(0) + chr(0) + chr(255) # moveForward
+                        cmd_byte = chr(0)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveForward
                         self.on_trigger(packet)
                         #print('w')
                     if (event.key == pygame.K_s):
-                        packet = chr(1) + chr(0)+ chr(255) # moveBack
+                        cmd_byte = chr(1)
+                        packet = cmd_byte + self.REST_BYTE+ self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
                         #print('s')
                     if (event.key == pygame.K_UP):
-                        packet = chr(2) + chr(0)+ chr(255) # moveUp
+                        cmd_byte = chr(2)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveUp
                         self.on_trigger(packet)
                         #print('up')
                     if (event.key == pygame.K_DOWN):
-                        packet = chr(3) + chr(0)+ chr(255) # moveBack
+                        cmd_byte = chr(3)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
                         #print('down')
                     if (event.key == pygame.K_a):
-                        packet = chr(4) +  chr(0)+ chr(255) # moveLeft
+                        cmd_byte = chr(4)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveLeft
                         self.on_trigger(packet)
                         #print('a')
                     if (event.key == pygame.K_d):
-                        packet = chr(5) + chr(0)+ chr(255) # moveRight
+                        cmd_byte = chr(5)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveRight
                         self.on_trigger(packet)
                         #print('d')
                     if (event.key == pygame.K_RIGHT):
-                        packet = chr(6) + chr(0)+ chr(255) #Turn Right
+                        cmd_byte = chr(6)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE #Turn Right
                         self.on_trigger(packet)
                         #print('right')
                     if (event.key == pygame.K_LEFT):
-                        packet = chr(7) + chr(0) + chr(255) #TurnLeft
+                        cmd_byte = chr(7)
+                        packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE #TurnLeft
                         self.on_trigger(packet)
                         #print('left')
-                    #elif (event.key == pygame.K_SPACE):
-                        #self.packet = '8' + '0' + chr(255) #Take screenshot
             pygame.display.flip()
         self.exit_program.Exit()   
