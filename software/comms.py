@@ -8,24 +8,18 @@ Created on Tue Feb  2 16:39:22 2021
 import serial
 import pygame
 import convert_to_packet
-# import gui
 import camera
 import sys
-
-#from queue import Queue
 
 NUM_BYTES = 3
 
 class Communications:
-    def __init__(self, usb, SCREEN_DIMENSIONS, FPS, cam_ids):
+    def __init__(self, usb, SCREEN_DIMENSIONS, FPS, cam_ids, baud_rate):
         self.USB = usb
         self.cams = []
         for cam_id in cam_ids:
             self.cams.append(camera.Camera(cam_id))
-        self.ser = serial.Serial(self.USB, 115200)
-        #self.ctp = convert_to_packet.Convert_To_Packet()
-        #gui.GUI(self.cam, SCREEN_DIMENSIONS, FPS, CAM_ID) ###
-        #self.q = Queue()
+        self.ser = serial.Serial(self.USB, baud_rate)
         self.ser.close()
         self.ser.open()
         
@@ -33,10 +27,8 @@ class Communications:
     
     def kill_op(self):
         sys.exit()
-        self.encode_and_send(chr(9) + chr(254) + chr(255))
-    
-    #def receive(self, keys):
-       # return self.receive_packets(keys)
+        end_packet = chr(9) + chr(254) + chr(255)
+        self.encode_and_send(end_packet)
         
     def encode_and_send(self, packets):
         self.ser.write(packets.encode("latin"))
@@ -44,16 +36,19 @@ class Communications:
  
     def receive(self, packets):
         line = ""
-        if(packets[0] == chr(8)):
-            if(packets[1] == chr(12)):
+        cams_cmd_byte = chr(8)
+        sshot_byte = chr(12)
+        cmd_byte_received = packets[0]
+        arg_byte_received = packets[1]
+        
+        if(cmd_byte_received == cams_cmd_byte):
+            if(arg_byte_received == sshot_byte):
                 for cam in self.cams:
                     cam.collect_screenshot()
             else:
                 self.encode_and_send(packets) ###
                 line = self.ser.read(NUM_BYTES)
                 
-        elif(packets[0] == chr(9)):
-            self.kill_op()
         else:
             self.encode_and_send(packets)
                 
