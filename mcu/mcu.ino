@@ -187,19 +187,21 @@ void execute_packet(int* packet) {
   }
 }
 
-void move_forward(int arg_byte) {
+void move_straight(int arg_byte) {
   int power = SPEED_MID + arg_byte;
   forward_left.writeMicroseconds(power);
   forward_right.writeMicroseconds(power);
+}
+
+void move_forward(int arg_byte) {
+  move_straight(arg_byte);
 }
 
 void move_backward(int arg_byte) {
-  int power = SPEED_MID - arg_byte;
-  forward_left.writeMicroseconds(power);
-  forward_right.writeMicroseconds(power);
+  move_straight(-1 * arg_byte);
 }
 
-void move_up(int arg_byte) {
+void move_vertical(int arg_byte) {
   int power = SPEED_MID + arg_byte;
   front_left.writeMicroseconds(power);
   front_right.writeMicroseconds(power);
@@ -207,30 +209,27 @@ void move_up(int arg_byte) {
   rear_right.writeMicroseconds(power);
 }
 
+void move_up(int arg_byte) {
+  move_vertical(arg_byte);
+}
+
 void move_down(int arg_byte) {
-  int power = SPEED_MID - arg_byte;
-  front_left.writeMicroseconds(power);
-  front_right.writeMicroseconds(power);
-  rear_left.writeMicroseconds(power);
-  rear_right.writeMicroseconds(power);
+  move_vertical(-1 * arg_byte);
+}
+
+void turn_direction(int arg_byte) {
+  int push_power = SPEED_MID + arg_byte;
+  int pull_power = SPEED_MID - arg_byte;
+  forward_right.writeMicroseconds(push_power);
+  forward_left.writeMicroseconds(pull_power);
 }
 
 void turn_left(int arg_byte) {
-  int power = SPEED_MIN + arg_byte;
-  forward_right.writeMicroseconds(power);
+  turn_direction(arg_byte);
 }
 
 void turn_right(int arg_byte) {
-  int power = SPEED_MIN + arg_byte;
-  forward_left.writeMicroseconds(power);
-}
-
-void tilt_left(int arg_byte) {
-  tilt_side(arg_byte);
-}
-
-void tilt_right(int arg_byte) {
-  tilt_side(-1 * arg_byte);
+  turn_direction(-1 * arg_byte);
 }
 
 void tilt_side(int arg_byte) {
@@ -240,4 +239,12 @@ void tilt_side(int arg_byte) {
   rear_right.writeMicroseconds(right_power);
   front_left.writeMicroseconds(left_power);
   rear_left.writeMicroseconds(left_power);
+}
+
+void tilt_left(int arg_byte) {
+  tilt_side(arg_byte);
+}
+
+void tilt_right(int arg_byte) {
+  tilt_side(-1 * arg_byte);
 }
