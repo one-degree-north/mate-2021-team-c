@@ -1,6 +1,7 @@
 import pygame
-import pygame_gui
 import camera
+import cv2
+
 
 class ShowX:
     def __init__(self,h, w, camID):
@@ -8,7 +9,7 @@ class ShowX:
         self.h = h
         self.w = w
         self.screen = pygame.display.set_mode([h,w], pygame.RESIZABLE)
-        self.cam = camera.Camera(camID)
+        self.cam = cv2.VideoCapture(camID)
 
     def create(self):
 
@@ -20,18 +21,15 @@ class ShowX:
                 if event.type == pygame.QUIT:
                     running = False
 
-            self.screen.fill((255,255,255))
-            '''
-            pygame.draw.rect(self.screen, (0, 0, 0), (0,0,((self.h/1.5)), (self.w/2)), 1)
-            pygame.draw.rect(self.screen, (0, 0, 0), ((self.h/1.5),0,(self.h - (self.h/1.5)), (self.w/2)), 1)
-            pygame.draw.rect(self.screen, (0, 0, 0), (0,(self.w/2),(self.h/1.5), (self.w/2)), 1)
-            pygame.draw.rect(self.screen, (0, 0, 0), ((self.h/1.5),(self.w/2),(self.h-(self.h/1.5)), (self.w/2)), 1)
-            '''
-
-            rect = pygame.Rect(0, 0, self.h/2, self.w/2)
-            #video = self.cam.capture()
-            self.screen.blit(self.cam.capture(), (0,0), rect)
-            pygame.display.flip()
+            ret, frame = self.cam.read()
+            
+            #self.screen.fill([0, 0, 0])
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame = frame.swapaxes(0, 1)
+            frame = pygame.surfarray.make_surface(frame)
+            self.screen.blit(frame, (0,0))
+            
+            pygame.display.update()
 
         
         
