@@ -3,7 +3,7 @@ import camera
 import cv2
 
 
-class ShowX:
+class GUI:
     def __init__(self,h, w, camID):
         pygame.init()
         self.h = h
