@@ -13,13 +13,12 @@ import threading
 
 USB = ""
 SCREEN_DIMENSIONS = () # width, height
-FPS = 30
 CAM_IDS = [1]
 SPEED = 100
 BAUD_RATE = 115200
 
 def start():
-    comm = comms.Communications(USB, FPS, CAM_IDS, BAUD_RATE)
+    comm = comms.Communications(USB, CAM_IDS, BAUD_RATE)
     exit_prog = exit_program.Exit_Program(comm)
     controls = control.Control(comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
     control_thread = threading.Thread(target=controls.run)
