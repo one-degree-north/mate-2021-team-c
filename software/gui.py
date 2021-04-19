@@ -9,7 +9,8 @@ class GUI:
         self.h = h
         self.w = w
         self.screen = pygame.display.set_mode([h,w], pygame.RESIZABLE)
-        self.cam = cv2.VideoCapture(camID)
+        self.cam = camera.Camera(camID)
+       
 
     def create(self):
 
@@ -21,9 +22,7 @@ class GUI:
                 if event.type == pygame.QUIT:
                     running = False
 
-            ret, frame = self.cam.read()
             
-            #self.screen.fill([0, 0, 0])
             frame = self.cam.capture()
             frame = pygame.surfarray.make_surface(frame)
             self.screen.blit(frame, (0,0))
