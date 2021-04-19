@@ -24,8 +24,7 @@ class GUI:
             ret, frame = self.cam.read()
             
             #self.screen.fill([0, 0, 0])
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = frame.swapaxes(0, 1)
+            frame = self.cam.capture()
             frame = pygame.surfarray.make_surface(frame)
             self.screen.blit(frame, (0,0))
             
