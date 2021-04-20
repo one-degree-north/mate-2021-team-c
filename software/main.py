@@ -14,7 +14,7 @@ import camera
 import gui
 
 USB = ""
-SCREEN_DIMENSIONS = () # width, height
+SCREEN_DIMENSIONS = (500,500) # width, height
 CAM_IDS = 0
 SPEED = 100
 BAUD_RATE = 115200
@@ -25,8 +25,11 @@ def start():
     cam = camera.Camera(CAM_IDS)
     gui = gui.GUI(1280,720,cam)
     controls = control.Control(gui, comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
+    gui_thread = threading.Thread(target=gui.run)
     control_thread = threading.Thread(target=controls.run)
+    gui_thread.start()
     control_thread.start()
+    gui_thread.join()
     control_thread.join()
     
     
