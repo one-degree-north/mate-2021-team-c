@@ -4,12 +4,12 @@ import cv2
 
 
 class GUI:
-    def __init__(self,h, w, camID):
+    def __init__(self,h, w, cam):
         pygame.init()
         self.h = h
         self.w = w
         self.screen = pygame.display.set_mode([h,w], pygame.RESIZABLE)
-        self.cam = camera.Camera(camID)
+        self.cam = cam
        
 
     def create(self):
