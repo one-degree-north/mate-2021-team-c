@@ -13,13 +13,13 @@ import camera
 class Control:
     def __init__(self, gui, comm, exit_prog, POWER, SCREEN_DIMS):
         self.comms = comm
-        self.gui = gui
+        #self.gui = gui
         self.exit_program = exit_prog
         pygame.init()
         self.SCREEN_DIMS = SCREEN_DIMS
         self.SCREEN_COLOR = (255, 255, 255)
-        #self.screen = pygame.display.set_mode(self.SCREEN_DIMS)
-        #self.screen.fill(self.SCREEN_COLOR)
+        self.screen = pygame.display.set_mode(self.SCREEN_DIMS)
+        self.screen.fill(self.SCREEN_COLOR)
         self.POWER_BYTE = chr(POWER)
         self.REST_BYTE = chr(0)
         self.TERMINAL_BYTE = chr(255)
