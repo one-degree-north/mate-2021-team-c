@@ -10,21 +10,26 @@ import exit_program
 import control
 import comms
 import threading
+import camera
+import gui
 
 USB = ""
 SCREEN_DIMENSIONS = () # width, height
-FPS = 30
-CAM_IDS = [1]
+CAM_IDS = 0
 SPEED = 100
 BAUD_RATE = 115200
 
 def start():
-    comm = comms.Communications(USB, FPS, CAM_IDS, BAUD_RATE)
+    comm = comms.Communications(USB, CAM_IDS, BAUD_RATE)
     exit_prog = exit_program.Exit_Program(comm)
-    controls = control.Control(comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
+    cam = camera.Camera(CAM_IDS)
+    gui = gui.GUI(1280,720,cam)
+    controls = control.Control(gui, comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
     control_thread = threading.Thread(target=controls.run)
     control_thread.start()
     control_thread.join()
+    
+    
 
 def end():
     exit_prog.Exit()
