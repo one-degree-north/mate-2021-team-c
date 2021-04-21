@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jan 26 16:08:11 2021
-@author: ayambabu
+@author: ayambabu and haardikchopra
 """
 
 import pygame
@@ -42,11 +42,11 @@ class Control:
                         cmd_byte = chr(1)
                         packet = cmd_byte + self.POWER_BYTE+ self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
-                    if (event.key == pygame.K_UP):
-                        cmd_byte = chr(2)
+                    if (event.key == pygame.K_DOWN):
+                        cmd_byte = chr(=2)
                         packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveUp
                         self.on_trigger(packet)
-                    if (event.key == pygame.K_DOWN):
+                    if (event.key == pygame.K_UP):
                         cmd_byte = chr(3)
                         packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
@@ -57,7 +57,7 @@ class Control:
                     if (event.key == pygame.K_d):
                         cmd_byte = chr(5)
                         packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveRight
-                        self.on_trigger(paclet)
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_RIGHT):
                         cmd_byte = chr(6)
                         packet = cmd_byte + self.POWER_BYTE+ self.TERMINAL_BYTE #Turn Right
@@ -66,10 +66,15 @@ class Control:
                         cmd_byte = chr(7)
                         packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE #TurnLeft
                         self.on_trigger(packet)
-                    if (event.key == pygame.K_SPACE):
+                    if (event.key == pygame.K_x):
                         self.cam.convert_to_img("moment", ".jpg")
+                    if (event.key == pygame.K_SPACE):
+                        cmd_byte = chr(8)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE #MoveClaw
+                        self.on_trigger(packet)
                     if (event.key == pygame.K_ESCAPE):
                         running = False
+                        
                     
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w:
@@ -80,11 +85,11 @@ class Control:
                         cmd_byte = chr(1)
                         packet = cmd_byte + self.REST_BYTE+ self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
-                    if (event.key == pygame.K_UP):
+                    if (event.key == pygame.K_DOWN):
                         cmd_byte = chr(2)
                         packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveUp
                         self.on_trigger(packet)
-                    if (event.key == pygame.K_DOWN):
+                    if (event.key == pygame.K_UP):
                         cmd_byte = chr(3)
                         packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)

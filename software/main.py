@@ -21,11 +21,11 @@ BAUD_RATE = 115200
 
 def start():
     comm = comms.Communications(USB, CAM_IDS, BAUD_RATE)
-    exit_prog = exit_program.Exit_Program(comm)
+    exit_prog = exit_program.Exit_Pr ogram(comm)
     cam = camera.Camera(CAM_IDS)
-    gui = gui.GUI(1280,720,cam)
+    display = gui.GUI(1280,720,cam)
     controls = control.Control(comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
-    gui_thread = threading.Thread(target=gui.run)
+    gui_thread = threading.Thread(target=display.run)
     control_thread = threading.Thread(target=controls.run)
     gui_thread.start()
     control_thread.start()
