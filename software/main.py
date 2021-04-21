@@ -24,7 +24,7 @@ def start():
     exit_prog = exit_program.Exit_Program(comm)
     cam = camera.Camera(CAM_IDS)
     gui = gui.GUI(1280,720,cam)
-    controls = control.Control(gui, comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
+    controls = control.Control(comm, exit_prog, SPEED, SCREEN_DIMENSIONS)
     gui_thread = threading.Thread(target=gui.run)
     control_thread = threading.Thread(target=controls.run)
     gui_thread.start()
