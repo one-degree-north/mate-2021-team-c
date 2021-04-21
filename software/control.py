@@ -11,9 +11,8 @@ import gui
 import camera
 
 class Control:
-    def __init__(self, gui, comm, exit_prog, POWER, SCREEN_DIMS):
+    def __init__(self, comm, exit_prog, POWER, SCREEN_DIMS):
         self.comms = comm
-        #self.gui = gui
         self.exit_program = exit_prog
         pygame.init()
         self.SCREEN_DIMS = SCREEN_DIMS
@@ -106,7 +105,6 @@ class Control:
                         packet = cmd_byte + self.REST_BYTE + self.TERMINAL_BYTE #TurnLeft
                         self.on_trigger(packet)
 
-            self.gui.create()
             pygame.display.flip()
 
         self.exit_program.Exit()   
