@@ -43,7 +43,7 @@ class Control:
                         packet = cmd_byte + self.POWER_BYTE+ self.TERMINAL_BYTE # moveBack
                         self.on_trigger(packet)
                     if (event.key == pygame.K_DOWN):
-                        cmd_byte = chr(=2)
+                        cmd_byte = chr(2)
                         packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE # moveUp
                         self.on_trigger(packet)
                     if (event.key == pygame.K_UP):
