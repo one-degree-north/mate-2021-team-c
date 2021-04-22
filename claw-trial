@@ -1,0 +1,31 @@
+#include <Servo.h>
+
+Servo myservo;
+
+void setup() {
+  // put your setup code here, to run once:
+  
+  myservo.attach(A2);
+  Serial.begin(230400);
+
+}
+
+void program() {
+  if (Serial.available()) {
+    char c = Serial.read();
+    int amount = Serial.read();
+    if (c == '0'){
+      if (amount > 180){
+        return;
+      }
+      myservo.write(amount);
+      delay(15);
+      Serial.println(amount);
+     }
+    }
+  }
+void loop() {
+  // put your main code here, to run repeatedly:
+  program();
+
+}
