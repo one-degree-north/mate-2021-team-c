@@ -5,11 +5,11 @@ import comms
 
 
 class GUI:
-    def __init__(self, screen_dim, cam, comm, exit_prog, POWER):
+    def __init__(self, h, w, cam, comm, exit_prog, POWER):
         pygame.init()
         self.h = h
         self.w = w
-        self.screen = pygame.display.set_mode(screen_dim, pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((h,w), pygame.RESIZABLE)
         self.cam = cam
         self.comm = comm
         self.exit_program = exit_prog
