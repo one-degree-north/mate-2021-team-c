@@ -9,22 +9,26 @@ import cv2
 import pygame.image as pyimg
 import os
 
-CAMERA_ID = -1
-img = None
+CAMERA_ID = 0
 video = None
 PATH = ""
 
 class Camera:
     def __init__(self, camera_id):
         self.CAMERA_ID = camera_id
+        self.video = cv2.VideoCapture(self.CAMERA_ID)
+        self.cnt = 0
+        self.img = None
         
     def capture(self):
-        video = cv2.VideoCapture(CAMERA_ID)
-        ret, img = video.read()
-        return pyimg.frombuffer(img.tostring(), img.shape[1::-1], "RGB")
+        ret, self.img = self.video.read()
+        self.img = cv2.cvtColor(self.img, cv2.COLOR_BGR2RGB)
+        self.img = self.img.swapaxes(0, 1)
+        return self.img
     
     def convert_to_img(self, name, imgformat):
-        cv2.imwrite(os.path.join(PATH, name+imgformat), img)
+        cv2.imwrite(os.path.join(PATH, name+str(cnt)+imgformat), self.img)
+        self.cnt = self.cnt + 1
         
     def destroy(self):
         video.release()
