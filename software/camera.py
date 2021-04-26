@@ -17,9 +17,9 @@ PATH = ""
 class Camera:
     def __init__(self, camera_id):
         self.CAMERA_ID = camera_id
+        video = cv2.VideoCapture(CAMERA_ID)
         
     def capture(self):
-        video = cv2.VideoCapture(CAMERA_ID)
         ret, img = video.read()
         return img
     
