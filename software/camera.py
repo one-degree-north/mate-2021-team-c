@@ -21,7 +21,7 @@ class Camera:
     def capture(self):
         video = cv2.VideoCapture(CAMERA_ID)
         ret, img = video.read()
-        return pyimg.frombuffer(img.tostring(), img.shape[1::-1], "RGB")
+        return img
     
     def convert_to_img(self, name, imgformat):
         os.chdir(PATH)
