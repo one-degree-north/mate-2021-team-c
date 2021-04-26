@@ -24,7 +24,9 @@ class Camera:
         return pyimg.frombuffer(img.tostring(), img.shape[1::-1], "RGB")
     
     def convert_to_img(self, name, imgformat):
-        cv2.imwrite(os.path.join(PATH, name+imgformat), img)
+        os.chdir(PATH)
+        cv2.imwrite(name+img_format, img)
+        print("Screenshot Stored in: " + PATH)
         
     def destroy(self):
         video.release()
