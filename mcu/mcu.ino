@@ -24,6 +24,8 @@
 #define SPEED_MIN 1000
 #define SPEED_MID 1500
 #define SPEED_MAX 2000
+#define CLAW_OPEN 1500
+#define CLAW_CLOSE 1800
 
 // Motor Pin Constants
 #define FRONT_LEFT_PIN 6
@@ -32,6 +34,7 @@
 #define REAR_RIGHT_PIN 11
 #define FORWARD_LEFT_PIN 12
 #define FORWARD_RIGHT_PIN 13
+#define SERVO_PIN 5
 
 // Comms Constants
 #define BAUD_RATE 115200
@@ -45,6 +48,9 @@ Servo rear_left;
 Servo rear_right;
 Servo forward_left;
 Servo forward_right;
+Servo claw;
+
+bool open = true;
 
 void setup() {
   setup_motors();
@@ -89,6 +95,7 @@ void setup_motors() {
   rear_right.attach(REAR_RIGHT_PIN);
   forward_left.attach(FORWARD_LEFT_PIN);
   forward_right.attach(FORWARD_RIGHT_PIN);
+  servo.attach(SERVO_PIN);
 }
 
 // Writes an incoming byte into the buffer `buffer` at the current buffer index `buf_ind`.
@@ -179,6 +186,7 @@ void execute_packet(int* packet) {
       tilt_left(arg_byte);
       break;
     case 8:
+      claw(arg_byte);
       break;
     case 9:
       break;
@@ -240,4 +248,14 @@ void tilt_side(int arg_byte) {
   rear_right.writeMicroseconds(right_power);
   front_left.writeMicroseconds(left_power);
   rear_left.writeMicroseconds(left_power);
+}
+
+void claw(int arg_byte) {
+  if (open) {
+    claw.writeMicroseconds(CLAW_CLOSE);
+  }
+  else {
+    claw.writeMicroseconds(CLAW_OPEN);
+  }
+  open = !open;
 }
