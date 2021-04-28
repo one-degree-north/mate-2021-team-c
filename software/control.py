@@ -23,6 +23,7 @@ class Control:
         
     def on_trigger(self, keys):
         self.comms.encode_and_send(keys)
+        print("sent")
         
     def run(self):
         running = True
@@ -66,6 +67,11 @@ class Control:
                         self.on_trigger(packet)
                     if (event.key == pygame.K_ESCAPE):
                         running = False
+                    if (event.key == pygame.K_SPACE):
+                        cmd_byte = chr(8)
+                        packet = cmd_byte + self.POWER_BYTE + self.TERMINAL_BYTE #MoveClaw
+                        self.on_trigger(packet)
+                     
                     
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_w:
